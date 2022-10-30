@@ -20,44 +20,39 @@ function playGame(playerAction, compAction){
 // Make the user's choice case insensitive
     playerAction = playerAction.toLowerCase();
 // Compare the computer and player actions with a conditional statement
-    //if user is paper and comp is rock, user wins
-    if(playerAction==="paper" && compAction==="rock"){
-        return 1; //"You win! Paper beats rock!"
+    //user wins
+    if((playerAction==="paper" && compAction==="rock")||
+    (playerAction==="scissors" && compAction==="paper")||
+    (playerAction==="rock" && compAction==="scissors")){
+        console.log(`You win! ${playerAction} beats ${compAction}!`);
+        return 1;
     }
-    //if user is scissors and comp is paper, user wins
-    if(playerAction==="scissors" && compAction==="paper"){
-        return 2; //"You win! scissors beats paper!"
-    }
-    //if user is rock and comp is scissors, user wins
-    if(playerAction==="rock" && compAction==="scissors"){
-        return 3; //"You win! rock beats scissors!"
-    }
-    //if user is rock and comp is paper, comp wins
-    if(playerAction==="rock" && compAction==="paper"){
-        return 4; //"You lose! paper beats rock!"
-    }
-    //if user is paper and user is scissors, comp wins
-    if(playerAction==="paper" && compAction==="scissors"){
-        return 5; //"You lose! scissors beats paper!"
-    }
-    //if user is scissors and user is rock, comp wins
-    if(playerAction==="scissors" && compAction==="rock"){
-        return 6; //"You lose! Rock beats scissors!"
+    //user loses
+    if((playerAction==="rock" && compAction==="paper")||
+    (playerAction==="paper" && compAction==="scissors")||
+    (playerAction==="scissors" && compAction==="rock")){
+        console.log(`You lose! ${compAction} beats ${playerAction}!`);
+        return -1;
     }
     //It's a tie if the user and the computer chose the same move
     else{
-        return 7; "It's a tie!";
+        console.log("It's a tie!");
     }
 }
 
-// 5. TEST THE TWO FUNCTIONS
-
-//const playerAction = "rock";
-//const compAction = getComputerChoice();
-//console.log(playGame(playerAction, compAction));
-
 // 6. WRITE A NEW FUNCTION WHICH WILL CALL THE PLAY GAME FUNCTION TO PLAY A FIVE ROUND GAME WHICH KEEPS SCORE AND ANNOUNCES A WINNER
 function game(){
+
+    //HELPER FUNCTION: PRINT THE SCORES OF THE GAME
+    let printScores = () => console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
+
+    //HELPER FUNCTION: FINAL RESULT OF ALL FIVE ROUNDS
+    function printFinalResult () {
+        if(playerScore>compScore) console.log("Congratulations, you win!");
+        else if (playerScore<compScore) console.log("You lose! Try again next time!");
+        else console.log("The game ended in a tie!");
+    }
+
     // Declare variable to record player and computer score
     let playerScore = 0; 
     let compScore = 0;
@@ -67,51 +62,14 @@ function game(){
         const playerAction = prompt("Make a move: ");
         // Call the computerChoice function and store the resulting move in a variable
         const compAction = getComputerChoice();
-        // Call the playGame function and send as arguments the user and player moves, in order to return a round result.
-        // The returned result will be a number that will be sent to a function declaration that contains a switch statement.
-        // The switch statement contains cases for the various numbers. Each case will call a function declaration to log an 
-        // appropriate message to the console, and a function declaration to keep track of score
-        switch(playGame(playerAction, compAction)){
-            case 1: 
-                console.log("You win! Paper beats rock!");
-                playerScore++
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 2: 
-                console.log("You win! scissors beats paper!");
-                playerScore++
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 3: 
-                console.log("You win! rock beats scissors!");
-                playerScore++
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 4: 
-                console.log("You lose! paper beats rock!");
-                compScore++ 
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 5: 
-                console.log("You lose! scissors beats paper!");
-                compScore++ 
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 6: 
-                console.log("You lose! Rock beats scissors!");
-                compScore++ 
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-            case 7: 
-                console.log("It's a tie!"); 
-                console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
-                break;
-        }
+        // Call the playGame function and record the score
+        let round = playGame(playerAction, compAction);
+        if(round==1) playerScore++;
+        else if (round==-1) compScore++;
+        printScores();
     }
-    // Return the final score and result of the five rounds 
-    if(playerScore>compScore) console.log("Congratulations, you win!");
-    else if (playerScore<compScore) console.log("You lose! Try again next time!");
-    else console.log("It's a tie!");
+    // Return the result of the five rounds 
+    printFinalResult()
 }
 
 // 7. TEST THE SCRIPT
