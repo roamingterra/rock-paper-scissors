@@ -45,7 +45,7 @@ function game(){
     // Loop through the game 5 times
     for(let i = 0; i < 5; i++){
         // Ask for the user's move and store it in a variable.
-        let playerAction = prompt("Make a move: ");
+        let playerAction = prompt('Make a move! Enter "rock", "paper", or "scissors"');
         // Call the computerChoice function and store the resulting move in a variable
         compAction = getComputerChoice();
         // Record the score
