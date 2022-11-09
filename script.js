@@ -1,4 +1,4 @@
-// 3. GET COMPUTER CHOICE FUNCTION: COMPUTER WILL RANDOMLY RETURN EITHER 'ROCK', 'PAPER', OR 'SCISSORS'
+// 1.3 GET COMPUTER CHOICE FUNCTION: COMPUTER WILL RANDOMLY RETURN EITHER 'ROCK', 'PAPER', OR 'SCISSORS'
 function getComputerChoice(){
 // Randomly generate a number between 1 and 3, and store number in a variable
     let compAction = Math.floor(Math.random()*3)+1;
@@ -10,12 +10,13 @@ function getComputerChoice(){
         } else if(compAction===3){
             compAction = "scissors";
         }
-// Return and print to console the computer's action
-    console.log(`The computer chose ${compAction}`);
+
+// 2. Return and print to the UI the computer's action
+    computerMove.textContent = `The computer chose ${compAction}`;
     return compAction;
     }
 
-// 4. PLAY A SINGLE ROUND OF ROCK, PAPER, SCISSORS, THAT TAKES IN AS PARAMETERS THE PLAYER ACTION AND THE COMPUTER ACTION
+// 1.4 PLAY A SINGLE ROUND OF ROCK, PAPER, SCISSORS, THAT TAKES IN AS PARAMETERS THE PLAYER ACTION AND THE COMPUTER ACTION
 function playGame(playerAction, compAction){
 // Make the user's choice case insensitive
     playerAction = playerAction.toLowerCase();
@@ -24,70 +25,100 @@ function playGame(playerAction, compAction){
     if((playerAction==="paper" && compAction==="rock")||
     (playerAction==="scissors" && compAction==="paper")||
     (playerAction==="rock" && compAction==="scissors")){
-        console.log(`You win! ${playerAction} beats ${compAction}!`);
+        roundResult.textContent = `You win! ${playerAction} beats ${compAction}!`;
         return 1;
     }
     //user loses
     if((playerAction==="rock" && compAction==="paper")||
     (playerAction==="paper" && compAction==="scissors")||
     (playerAction==="scissors" && compAction==="rock")){
-        console.log(`You lose! ${compAction} beats ${playerAction}!`);
+        roundResult.textContent = `You lose! ${compAction} beats ${playerAction}!`;
         return -1;
     }
     //It's a tie if the user and the computer chose the same move
     else{
-        console.log("It's a tie!");
+        roundResult.textContent = "It's a tie!";
     }
 }
 
-// 6. WRITE A NEW FUNCTION WHICH WILL CALL THE PLAY GAME FUNCTION TO PLAY A FIVE ROUND GAME WHICH KEEPS SCORE AND ANNOUNCES A WINNER
-function game(){   
-    // Loop through the game 5 times
-    for(let i = 0; i < 5; i++){
-        // Ask for the user's move and store it in a variable.
-        let playerAction = prompt('Make a move! Enter "rock", "paper", or "scissors"');
-        // Call the computerChoice function and store the resulting move in a variable
-        compAction = getComputerChoice();
-        // Record the score
-        let roundResult = playGame(playerAction, compAction);
-            if(roundResult==1) {
-                playerScore++;
-            }
-            else if (roundResult==-1) {
-                compScore++;
-            }
-        // Print the score
-        printScores();
+// 1.6 WRITE A NEW FUNCTION WHICH WILL CALL THE PLAY GAME FUNCTION TO PLAY A FIVE ROUND GAME WHICH KEEPS SCORE AND ANNOUNCES A WINNER
+function game(result){   
+    // Update scores based on round results
+    if(result==1) {
+        playerScore++;
     }
-    // Return the result of the five rounds 
-    printFinalResult();
+    else if (result==-1) {
+        compScore++;
+    }
+    // Print the score
+    printScores();
+
+    // 2. Once player or comp has 5 points, final results are printed
+    if(playerScore===5||compScore===5){
+        printFinalResult(); 
+        return false;
+    }
+
 }
 
 //HELPER FUNCTION 1: PRINT THE SCORES OF THE GAME
  function printScores(){
-    console.log(`Player Score: ${playerScore} Computer Score: ${compScore}`);
+    const score = document.getElementById("score");
+    score.textContent = `Player Score: ${playerScore} Computer Score: ${compScore}`;
 }
 
  //HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
  function printFinalResult () {
+    const finalResult = document.getElementById("final-result");
      if(playerScore>compScore){
-         console.log("Congratulations, you win!");
+        finalResult.textContent = "Congratulations, you win!";
      }
      else if(playerScore<compScore) {
-     console.log("You lose! Try again next time!");
+        finalResult.textContent = "You lose! Try again next time!";
      }
      else {
-         console.log("The game ended in a tie!");
+        finalResult.textContent = "The game ended in a tie!";
      }
  }
- 
-// 7. TEST THE SCRIPT
 
-// Declare variables to record player and computer actions and scores
+ //HELPER FUNCTION 2.3: CLEAR BOARD
+ function clearBoard(){
+    computerMove.textContent = "";
+    roundResult.textContent = "";
+    score.textContent = "";
+    finalResult.textContent = "";
+
+    playerScore = 0;
+    compScore = 0;
+ }
+ 
+// DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES
 let playerScore = 0; 
 let compScore = 0;
 
-// Let's play 5 rounds
-game();
+// 2. DECLARE VARIABLES WITH REFERENCES TO UI TAGS 
+let computerMove = document.getElementById("computer-move");
+let roundResult = document.getElementById("round-result");
+let score = document.getElementById("score");
+let finalResult = document.getElementById("final-result");
+
+// 2. EVENT LISTENER FOR NEW GAME BUTTON WHICH CLEARS THE BOARD WHEN CLICKED
+
+const startButton = document.getElementById('start-new-game');
+startButton.addEventListener('click', () => {
+    clearBoard();
+})
+
+// 2. EVENT LISTENER FOR PLAYER MOVE BUTTONS, WHICH REPLACES FOR LOOP FROM BEFORE THE UI
+const buttons = document.querySelectorAll('div button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        let continuePlaying = game(playGame(button.id, getComputerChoice()));
+        if(continuePlaying===false){
+            return; // Game should exit. This will need to be re-worked
+        }
+    })
+});
+
 
    
