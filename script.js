@@ -102,20 +102,23 @@ let roundResult = document.getElementById("round-result");
 let score = document.getElementById("score");
 let finalResult = document.getElementById("final-result");
 
-// 2. EVENT LISTENER FOR NEW GAME BUTTON WHICH CLEARS THE BOARD WHEN CLICKED
-
-const startButton = document.getElementById('start-new-game');
-startButton.addEventListener('click', () => {
-    clearBoard();
-})
-
 // 2. EVENT LISTENER FOR PLAYER MOVE BUTTONS, WHICH REPLACES FOR LOOP FROM BEFORE THE UI
 const buttons = document.querySelectorAll('div button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         let continuePlaying = game(playGame(button.id, getComputerChoice()));
         if(continuePlaying===false){
-            return; // Game should exit. This will need to be re-worked
+            let newGame = confirm(`${finalResult.textContent}\nPlay again?`)
+            if(newGame===true){
+                clearBoard(); 
+                newGame=false;
+            }
+            else if(newGame===false||newGame===null||newGame===undefined){
+                buttons.forEach((button) => {
+                    //button.removeEventListener('click', false)
+                    button.disabled = true;
+                } );
+            }
         }
     })
 });
