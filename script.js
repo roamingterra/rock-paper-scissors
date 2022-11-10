@@ -67,31 +67,48 @@ function game(result){
     score.textContent = `Player Score: ${playerScore} Computer Score: ${compScore}`;
 }
 
- //HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
- function printFinalResult () {
-    const finalResult = document.getElementById("final-result");
-     if(playerScore>compScore){
-        finalResult.textContent = "Congratulations, you win!";
-     }
-     else if(playerScore<compScore) {
-        finalResult.textContent = "You lose! Try again next time!";
-     }
-     else {
-        finalResult.textContent = "The game ended in a tie!";
-     }
- }
+//HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
+function printFinalResult () {
+const finalResult = document.getElementById("final-result");
+    if(playerScore>compScore){
+    finalResult.textContent = "Congratulations, you win!";
+    }
+    else if(playerScore<compScore) {
+    finalResult.textContent = "You lose! Try again next time!";
+    }
+    else {
+    finalResult.textContent = "The game ended in a tie!";
+    }
+}
 
- //HELPER FUNCTION 2.3: CLEAR BOARD
- function clearBoard(){
-    computerMove.textContent = "";
-    roundResult.textContent = "";
-    score.textContent = "";
-    finalResult.textContent = "";
+//HELPER FUNCTION 2.3: CLEAR BOARD
+function clearBoard(){
+computerMove.textContent = "";
+roundResult.textContent = "";
+score.textContent = "";
+finalResult.textContent = "";
 
-    playerScore = 0;
-    compScore = 0;
- }
- 
+playerScore = 0;
+compScore = 0;
+}
+
+//HELPER FUNCTION 2.4: DISPLAYS WINDOW WITH FINAL GAME RESULT AND AN OPTION TO PLAY AGAIN 
+function endGameWindow(){
+    setTimeout(function(){
+        let newGame = confirm(`${finalResult.textContent}\nPlay again?`)
+        if(newGame===true){
+            clearBoard(); 
+            newGame=false;
+        }
+        else if(newGame===false||newGame===null||newGame===undefined){
+            buttons.forEach((button) => {
+                //button.removeEventListener('click', false)
+                button.disabled = true;
+            } );
+        }
+    },10)
+}
+
 // DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES
 let playerScore = 0; 
 let compScore = 0;
@@ -108,17 +125,7 @@ buttons.forEach((button) => {
     button.addEventListener('click', () => {
         let continuePlaying = game(playGame(button.id, getComputerChoice()));
         if(continuePlaying===false){
-            let newGame = confirm(`${finalResult.textContent}\nPlay again?`)
-            if(newGame===true){
-                clearBoard(); 
-                newGame=false;
-            }
-            else if(newGame===false||newGame===null||newGame===undefined){
-                buttons.forEach((button) => {
-                    //button.removeEventListener('click', false)
-                    button.disabled = true;
-                } );
-            }
+            endGameWindow();
         }
     })
 });
