@@ -58,18 +58,15 @@ function game(result){
         printFinalResult(); 
         return false;
     }
-
 }
 
 //HELPER FUNCTION 1: PRINT THE SCORES OF THE GAME
  function printScores(){
-    const score = document.getElementById("score");
     score.textContent = `Player Score: ${playerScore} Computer Score: ${compScore}`;
 }
 
 //HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
 function printFinalResult () {
-const finalResult = document.getElementById("final-result");
     if(playerScore>compScore){
     finalResult.textContent = "Congratulations, you win!";
     }
@@ -114,16 +111,16 @@ let playerScore = 0;
 let compScore = 0;
 
 // 2. DECLARE VARIABLES WITH REFERENCES TO UI TAGS 
-let computerMove = document.getElementById("computer-move");
-let roundResult = document.getElementById("round-result");
-let score = document.getElementById("score");
-let finalResult = document.getElementById("final-result");
+let computerMove = document.querySelector("#text .computer-move");
+let roundResult = document.querySelector("#text .round-result");
+let score = document.querySelector("#text .score");
+let finalResult = document.querySelector("#text .final-result");
 
 // 2. EVENT LISTENER FOR PLAYER MOVE BUTTONS, WHICH REPLACES FOR LOOP FROM BEFORE THE UI
-const buttons = document.querySelectorAll('div button');
+const buttons = document.querySelectorAll('#icons button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        let continuePlaying = game(playGame(button.id, getComputerChoice()));
+        let continuePlaying = game(playGame(button.className, getComputerChoice()));
         if(continuePlaying===false){
             endGameWindow();
         }
