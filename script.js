@@ -12,7 +12,7 @@ function getComputerChoice(){
         }
 
 // 2. Return and print to the UI the computer's action
-    computerMove.textContent = `The computer chose ${compAction}`;
+    computerMoveTxt = `The computer chose ${compAction}`;
     return compAction;
     }
 
@@ -25,19 +25,19 @@ function playGame(playerAction, compAction){
     if((playerAction==="paper" && compAction==="rock")||
     (playerAction==="scissors" && compAction==="paper")||
     (playerAction==="rock" && compAction==="scissors")){
-        roundResult.textContent = `You win! ${playerAction} beats ${compAction}!`;
+        roundResultTxt = `You win! ${playerAction} beats ${compAction}!`;
         return 1;
     }
     //user loses
     if((playerAction==="rock" && compAction==="paper")||
     (playerAction==="paper" && compAction==="scissors")||
     (playerAction==="scissors" && compAction==="rock")){
-        roundResult.textContent = `You lose! ${compAction} beats ${playerAction}!`;
+        roundResultTxt = `You lose! ${compAction} beats ${playerAction}!`;
         return -1;
     }
     //It's a tie if the user and the computer chose the same move
     else{
-        roundResult.textContent = "It's a tie!";
+        roundResultTxt = "It's a tie!";
     }
 }
 
@@ -62,19 +62,19 @@ function game(result){
 
 //HELPER FUNCTION 1: PRINT THE SCORES OF THE GAME
  function printScores(){
-    score.textContent = `Player Score: ${playerScore} Computer Score: ${compScore}`;
+    scoreTxt = `Player Score: ${playerScore} Computer Score: ${compScore}`;
 }
 
 //HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
 function printFinalResult () {
     if(playerScore>compScore){
-    finalResult.textContent = "Congratulations, you win!";
+    finalResultTxt = "Congratulations, you win!";
     }
     else if(playerScore<compScore) {
-    finalResult.textContent = "You lose! Try again next time!";
+    finalResultTxt = "You lose! Try again next time!";
     }
     else {
-    finalResult.textContent = "The game ended in a tie!";
+    finalResultTxt = "The game ended in a tie!";
     }
 }
 
@@ -103,14 +103,63 @@ function endGameWindow(){
                 button.disabled = true;
             } );
         }
-    },10)
+    },500)
 }
 
-// DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES
+//HELPER FUNCTION 2.5.1: TYPEWRITER EFFECT FOR COMPUTER MOVE
+function typeWriter1(){
+    computerMove.textContent += computerMoveTxt.charAt(i);
+    if (i++ < (computerMoveTxt.length)) {
+        setTimeout(typeWriter1, 10);
+    }
+}
+
+//HELPER FUNCTION 2.5.2: TYPEWRITER EFFECT FOR ROUND RESULT
+function typeWriter2(){
+    roundResult.textContent += roundResultTxt.charAt(j);
+    if (j++ < (roundResultTxt.length)) {
+        setTimeout(typeWriter2, 10);
+    }
+}
+
+//HELPER FUNCTION 2.5.3: TYPEWRITER EFFECT FOR SCORE
+function typeWriter3(){
+    score.textContent += scoreTxt.charAt(k);
+    if (k++ < (scoreTxt.length)) {
+        setTimeout(typeWriter3, 10);
+    }
+}
+
+//HELPER FUNCTION 2.5.4: TYPEWRITER EFFECT FOR FINAL RESULT
+function typeWriter4(){
+    finalResult.textContent += finalResultTxt.charAt(l);
+    if (l++ < (finalResultTxt.length)) {
+        setTimeout(typeWriter4, 10);
+    }
+}
+
+//HELPER FUNCTION 2.6: TYPE RESULTS
+function typeResults(){
+    typeWriter1();
+    typeWriter2();
+    typeWriter3();
+    typeWriter4();
+}
+
+// DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES, AND THE COUNTER VARIABLES FOR THE TYPE WRITER FUNCTIONS
 let playerScore = 0; 
 let compScore = 0;
+let i = 0;
+let j = 0;
+let k = 0;
+let l = 0;
 
 // 2. DECLARE VARIABLES WITH REFERENCES TO UI TAGS 
+let computerMoveTxt = "";
+let roundResultTxt = "";
+let scoreTxt = "";
+let finalResultTxt = "";
+
 let computerMove = document.querySelector("#text .computer-move");
 let roundResult = document.querySelector("#text .round-result");
 let score = document.querySelector("#text .score");
@@ -120,7 +169,18 @@ let finalResult = document.querySelector("#text .final-result");
 const buttons = document.querySelectorAll('#icons button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
+        computerMove.textContent = ""; //Reset the text to contain nothing when a new round is played
+        roundResult.textContent = "";
+        score.textContent = "";
+        finalResult.textContent = "";
+        i = 0;
+        j = 0;
+        k = 0;
+        l = 0;
+
         let continuePlaying = game(playGame(button.className, getComputerChoice()));
+        //Display results
+        typeResults();
         if(continuePlaying===false){
             endGameWindow();
         }
