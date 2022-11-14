@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'terminalmedium';
+    src: url(fonts/Terminal.ttf);
+        url('terminal-webfont.woff2') format('woff2'),
+         url('terminal-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,
+body {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+font-family: 'VT323-Regular';/*'terminalmedium';*/
+background-image: url(./images/pixel-cave.jpeg);
+background-size: cover;
+margin: 0;
+padding: 0;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    gap: 25px;
+    font-family: 'terminalmedium';
+}
+
+.title-and-slogan{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title{
+    font-size: xx-large;
+    font-weight: bold;
+    color: rgb(123, 255, 47);
+}
+
+.slogan{
+    font-size: larger;
+    color: rgb(253, 0, 0);
+}
+
+.make-a-move{
+    font-size: larger;
+    color: rgb(255, 213, 0)
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+#icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#content #icons button{
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+    border-width: 4px;
+    background-size: cover;
+}
+
+.rock{
+    background: url(./images/pixel-mountain.png);
+}
+
+.paper{
+    background: url(./images/pixel-tree.png);
+}
+
+.scissors{
+    background: url(./images/pixel-spears.png);
+}
+
+#text-container{
+    display: flex;
+   
+    align-items: center;
+    width: 65%;                
+    height: 15vh;
+    margin: 2em auto;
+    background: black;
+    border: solid white;
+    box-shadow:   -5px 0 0 0 white,
+                 5px 0 0 0 white,
+                 0 -5px 0 0 white,
+                 0 5px 0 0 white;
+}
+
+#text{
+    flex-grow: 1; /* For the text of the results to take up the entire space of the console and center its self*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: black;
+    font-family:'terminalmedium';
+}
+
+.computer-move{
+    color: rgb(123, 255, 47);
+}
+.round-result{
+    color: rgb(253, 0, 0);
+}
+.score{
+    color: rgb(255, 213, 0);
+}
+.final-result{
+    color: rgb(123, 255, 47);
+}
+
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'terminalmedium';
+    font-size:medium;
+    background: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#footer .creator{
+    color: lightseagreen;
+}
+
+#footer .collaborator{
+    color: orange;
+}
+

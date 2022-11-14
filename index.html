@@ -7,24 +7,30 @@
 </head>
 <body>
     <header>
-        Welcome to prehistory<br>
-        a rock, paper, scissors variant<br>
-        make a move
+        <div class="title-and-slogan">
+            <div class="title">Welcome To Prehistory</div> 
+            <div class="slogan">a rock, paper, scissors variant</div>
+        </div>
+        <div class="make-a-move">make a move</div>
     </header>
-    <div id="icons">
-        <button class="rock">Rock</button>
-        <button class="paper">Paper</button>
-        <button class="scissors">Scissors</button>
+    <div id="content">
+        <div id="icons">
+            <button type="submit" class="rock"></button>
+            <button type="submit" class="paper"></button>
+            <button type="submit" class="scissors"></button>
+        </div>
+        <div id="text-container">
+            <div id="text">
+                <div class="computer-move"></div>
+                <div class="round-result"></div>
+                <div class="score"></div>
+                <div class="final-result"></div>
+             </div>
+        </div>
     </div>
-    <div id="text">
-        <div class="computer-move"></div>
-        <div class="round-result"></div>
-        <div class="score"></div>
-        <div class="final-result"></div>
-    </div>
-    <footer>
-        Website created by Daniel Ballerini<br>
-        with help from © The Odin Project
+    <footer id="footer">
+        <div class="creator">Website created by Daniel Ballerini</div>
+        <div class="collaborator">with help from © The Odin Project</div>
     </footer>
     <script type="text/javascript" src="./script.js"></script>
 </body>
