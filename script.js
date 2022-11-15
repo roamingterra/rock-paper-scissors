@@ -4,11 +4,11 @@ function getComputerChoice(){
     let compAction = Math.floor(Math.random()*3)+1;
 // Assign 1, 2, and 3 to an action ('rock', 'paper', or 'scissors') (conditional statement)
         if(compAction===1){
-            compAction = "rock";
+            compAction = "mountain";
         } else if(compAction===2){
-            compAction = "paper";
+            compAction = "tree";
         } else if(compAction===3){
-            compAction = "scissors";
+            compAction = "spears";
         }
 
 // 2. Return and print to the UI the computer's action
@@ -22,16 +22,16 @@ function playGame(playerAction, compAction){
     playerAction = playerAction.toLowerCase();
 // Compare the computer and player actions with a conditional statement
     //user wins
-    if((playerAction==="paper" && compAction==="rock")||
-    (playerAction==="scissors" && compAction==="paper")||
-    (playerAction==="rock" && compAction==="scissors")){
+    if((playerAction==="tree" && compAction==="mountain")||
+    (playerAction==="spears" && compAction==="tree")||
+    (playerAction==="mountain" && compAction==="spears")){
         roundResultTxt = `You win! ${playerAction} beats ${compAction}!`;
         return 1;
     }
     //user loses
-    if((playerAction==="rock" && compAction==="paper")||
-    (playerAction==="paper" && compAction==="scissors")||
-    (playerAction==="scissors" && compAction==="rock")){
+    if((playerAction==="mountain" && compAction==="tree")||
+    (playerAction==="tree" && compAction==="spears")||
+    (playerAction==="spears" && compAction==="mountain")){
         roundResultTxt = `You lose! ${compAction} beats ${playerAction}!`;
         return -1;
     }
@@ -75,7 +75,7 @@ function assignFinalResult () {
     }
 }
 
-//HELPER FUNCTION 2.4: DISABLES THE BUTTONS WHEN THE GAME IS FINISHED
+//HELPER FUNCTION 2.4: DISABLES ALL BUTTONS WHEN THE GAME IS FINISHED
 function endGame(){
     buttons.forEach((button) => {
         button.disabled = true;
@@ -107,18 +107,24 @@ let text = document.querySelector("#text .text"); //This is the variable that wi
 // 2. EVENT LISTENER FOR PLAYER MOVE BUTTONS, WHICH REPLACES FOR LOOP FROM BEFORE THE UI
 const buttons = document.querySelectorAll('#icons button');
 buttons.forEach((button) => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', () => { //Disables all buttons when clicked
+        buttons.forEach((button) => {
+            button.disabled = true;
+        } ); 
         text.textContent = "";
         i = 0; //Zero the counter at the beginning fo every round
-
         let continuePlaying = game(playGame(button.className, getComputerChoice()));
         //Display results
         textTxt = `${computerMoveTxt}\r\n${roundResultTxt}\r\n${scoreTxt}\r\n${finalResultTxt}`;
         typeWriter();
-        
-        if(continuePlaying===false){
-            endGame();
-        }
+        setTimeout(()=>{  
+            buttons.forEach((button) => { //Re-enables all buttons after a set time 
+                button.disabled = false;
+            } ); 
+            if(continuePlaying===false){
+                endGame();
+            }
+        }, 700)
     })
 });
 

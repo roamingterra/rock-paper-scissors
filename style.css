@@ -73,15 +73,24 @@ header{
     background-size: cover;
 }
 
-.rock{
+#content #icons button:hover{
+    border-width: 10px;
+}
+
+#content #icons button:disabled{
+    /* Make shadows the same as when not pressed*/
+    border-color: grey black black grey;
+}
+
+.mountain{
     background: url(./images/pixel-mountain.png);
 }
 
-.paper{
+.tree{
     background: url(./images/pixel-tree.png);
 }
 
-.scissors{
+.spears{
     background: url(./images/pixel-spears.png);
 }
 
