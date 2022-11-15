@@ -50,155 +50,74 @@ function game(result){
     else if (result==-1) {
         compScore++;
     }
-    // Print the score
-    printScores();
+    // Assign scores to a string variable
+    assignScores();
 
     // 2. Once player or comp has 5 points, final results are printed
     if(playerScore===5||compScore===5){
-        printFinalResult(); 
+        assignFinalResult(); 
         return false;
     }
 }
 
-//HELPER FUNCTION 1: PRINT THE SCORES OF THE GAME
- function printScores(){
+//HELPER FUNCTION 1: ASSIGNS THE GAME SCORE TO THE APPROPRIATE STRING VARIABLE
+ function assignScores(){
     scoreTxt = `Player Score: ${playerScore} Computer Score: ${compScore}`;
 }
 
-//HELPER FUNCTION 2: PRINT FINAL RESULT OF ALL FIVE ROUNDS
-function printFinalResult () {
+//HELPER FUNCTION 2: ASSIGNS THE FINAL RESULT OF ALL FIVE ROUNDS TO THE APPROPRIATE STRING VARIABLE
+function assignFinalResult () {
     if(playerScore>compScore){
-    finalResultTxt = "Congratulations, you win!";
+    finalResultTxt = "***CONGRATULATIONS, YOU WIN!!!***";
     }
     else if(playerScore<compScore) {
-    finalResultTxt = "You lose! Try again next time!";
-    }
-    else {
-    finalResultTxt = "The game ended in a tie!";
+    finalResultTxt = "***YOU LOSE, TRY AGAIN NEXT TIME!***";
     }
 }
 
-//HELPER FUNCTION 2.3: CLEAR BOARD
-function clearBoard(){
-    text.textContent = "";
-    /*computerMove.textContent = "";
-    roundResult.textContent = "";
-    score.textContent = "";
-    finalResult.textContent = "";*/
-
-    playerScore = 0;
-    compScore = 0;
-}
-
-//HELPER FUNCTION 2.4: DISPLAYS WINDOW WITH FINAL GAME RESULT AND AN OPTION TO PLAY AGAIN 
-function endGameWindow(){
+//HELPER FUNCTION 2.4: DISABLES THE BUTTONS WHEN THE GAME IS FINISHED
+function endGame(){
     buttons.forEach((button) => {
-        //button.removeEventListener('click', false)
         button.disabled = true;
     } );
-    /*let newGame = confirm(`${finalResultTxt}\nPlay again?`)
-    if(newGame===true){
-        clearBoard(); 
-        newGame=false;
-    }
-    else if(newGame===false||newGame===null||newGame===undefined){
-        buttons.forEach((button) => {
-            //button.removeEventListener('click', false)
-            button.disabled = true;
-        } );
-    }*/
 }
 
-//HELPER FUNCTION 2.5: TYPEWRITER EFFECT FOR ALL TEXT 
+//HELPER FUNCTION 2.5: TYPEWRITER EFFECT FOR ALL DISPLAYED RESULTS IN THE UI 
 function typeWriter(){
     text.textContent += textTxt.charAt(i);
     if (i++ < (textTxt.length)) {
         setTimeout(typeWriter, 5);
     }
 }
-//HELPER FUNCTION 2.5.1: TYPEWRITER EFFECT FOR COMPUTER MOVE
-function typeWriter1(){
-    computerMove.textContent += computerMoveTxt.charAt(i);
-    if (i++ < (computerMoveTxt.length)) {
-        setTimeout(typeWriter1, 10);
-    }
-}
 
-//HELPER FUNCTION 2.5.2: TYPEWRITER EFFECT FOR ROUND RESULT
-function typeWriter2(){
-    roundResult.textContent += roundResultTxt.charAt(j);
-    if (j++ < (roundResultTxt.length)) {
-        setTimeout(typeWriter2, 10);
-    }
-}
-
-//HELPER FUNCTION 2.5.3: TYPEWRITER EFFECT FOR SCORE
-function typeWriter3(){
-    score.textContent += scoreTxt.charAt(k);
-    if (k++ < (scoreTxt.length)) {
-        setTimeout(typeWriter3, 10);
-    }
-}
-
-//HELPER FUNCTION 2.5.4: TYPEWRITER EFFECT FOR FINAL RESULT
-function typeWriter4(){
-    finalResult.textContent += finalResultTxt.charAt(l);
-    if (l++ < (finalResultTxt.length)) {
-        setTimeout(typeWriter4, 10);
-    }
-}
-
-//HELPER FUNCTION 2.6: TYPE RESULTS
-function typeResults(){
-    typeWriter();
-    //typeWriter1();
-    //typeWriter2();
-    //typeWriter3();
-    //typeWriter4();
-}
-
-// DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES, AND THE COUNTER VARIABLES FOR THE TYPE WRITER FUNCTIONS
+// DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES, AND THE COUNTER VARIABLE FOR THE TYPE WRITER FUNCTION
 let playerScore = 0; 
 let compScore = 0;
-let i = 0;
-//let j = 0;
-//let k = 0;
-//let l = 0;
+let i = 0; //Counter for the type writer function
 
-// 2. DECLARE VARIABLES WITH REFERENCES TO UI TAGS 
+// 2. DECLARE VARIABLES TO STORE TEXT FOR GAME STATS
 let computerMoveTxt = "";
 let roundResultTxt = "";
 let scoreTxt = "";
 let finalResultTxt = "";
 let textTxt = "";
 
-let text = document.querySelector("#text .text"); //To eventually display all of the text as one variable
-let computerMove = document.querySelector("#text .computer-move");
-let roundResult = document.querySelector("#text .round-result");
-let score = document.querySelector("#text .score");
-let finalResult = document.querySelector("#text .final-result");
+let text = document.querySelector("#text .text"); //This is the variable that will display the results in the UI
 
 // 2. EVENT LISTENER FOR PLAYER MOVE BUTTONS, WHICH REPLACES FOR LOOP FROM BEFORE THE UI
 const buttons = document.querySelectorAll('#icons button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         text.textContent = "";
-        //computerMove.textContent = ""; //Reset the text to contain nothing when a new round is played
-        //roundResult.textContent = "";
-        //score.textContent = "";
-        //finalResult.textContent = "";
-        i = 0;
-        j = 0;
-        k = 0;
-        l = 0;
+        i = 0; //Zero the counter at the beginning fo every round
 
         let continuePlaying = game(playGame(button.className, getComputerChoice()));
         //Display results
         textTxt = `${computerMoveTxt}\r\n${roundResultTxt}\r\n${scoreTxt}\r\n${finalResultTxt}`;
-        typeResults();
+        typeWriter();
         
         if(continuePlaying===false){
-            endGameWindow();
+            endGame();
         }
     })
 });
