@@ -109,6 +109,23 @@ header{
     font-family:'terminalmedium';
 }
 
+.text{
+    color: white;
+    white-space: break-spaces; /* break-spaces*/
+    text-align: center;
+}
+
+#text .cursor{
+    animation: blinker 1s linear infinite;
+    color: white;
+}
+
+@keyframes blinker {
+    50%{
+        opacity: 0;
+    }
+}
+
 .computer-move{
     color: rgb(123, 255, 47);
 }

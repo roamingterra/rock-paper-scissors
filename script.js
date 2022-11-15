@@ -80,32 +80,42 @@ function printFinalResult () {
 
 //HELPER FUNCTION 2.3: CLEAR BOARD
 function clearBoard(){
-computerMove.textContent = "";
-roundResult.textContent = "";
-score.textContent = "";
-finalResult.textContent = "";
+    text.textContent = "";
+    /*computerMove.textContent = "";
+    roundResult.textContent = "";
+    score.textContent = "";
+    finalResult.textContent = "";*/
 
-playerScore = 0;
-compScore = 0;
+    playerScore = 0;
+    compScore = 0;
 }
 
 //HELPER FUNCTION 2.4: DISPLAYS WINDOW WITH FINAL GAME RESULT AND AN OPTION TO PLAY AGAIN 
 function endGameWindow(){
-    setTimeout(function(){
-        let newGame = confirm(`${finalResult.textContent}\nPlay again?`)
-        if(newGame===true){
-            clearBoard(); 
-            newGame=false;
-        }
-        else if(newGame===false||newGame===null||newGame===undefined){
-            buttons.forEach((button) => {
-                //button.removeEventListener('click', false)
-                button.disabled = true;
-            } );
-        }
-    },500)
+    buttons.forEach((button) => {
+        //button.removeEventListener('click', false)
+        button.disabled = true;
+    } );
+    /*let newGame = confirm(`${finalResultTxt}\nPlay again?`)
+    if(newGame===true){
+        clearBoard(); 
+        newGame=false;
+    }
+    else if(newGame===false||newGame===null||newGame===undefined){
+        buttons.forEach((button) => {
+            //button.removeEventListener('click', false)
+            button.disabled = true;
+        } );
+    }*/
 }
 
+//HELPER FUNCTION 2.5: TYPEWRITER EFFECT FOR ALL TEXT 
+function typeWriter(){
+    text.textContent += textTxt.charAt(i);
+    if (i++ < (textTxt.length)) {
+        setTimeout(typeWriter, 5);
+    }
+}
 //HELPER FUNCTION 2.5.1: TYPEWRITER EFFECT FOR COMPUTER MOVE
 function typeWriter1(){
     computerMove.textContent += computerMoveTxt.charAt(i);
@@ -140,26 +150,29 @@ function typeWriter4(){
 
 //HELPER FUNCTION 2.6: TYPE RESULTS
 function typeResults(){
-    typeWriter1();
-    typeWriter2();
-    typeWriter3();
-    typeWriter4();
+    typeWriter();
+    //typeWriter1();
+    //typeWriter2();
+    //typeWriter3();
+    //typeWriter4();
 }
 
 // DECLARE VARIABLES TO RECORD PLAYER AND COMPUTER SCORES, AND THE COUNTER VARIABLES FOR THE TYPE WRITER FUNCTIONS
 let playerScore = 0; 
 let compScore = 0;
 let i = 0;
-let j = 0;
-let k = 0;
-let l = 0;
+//let j = 0;
+//let k = 0;
+//let l = 0;
 
 // 2. DECLARE VARIABLES WITH REFERENCES TO UI TAGS 
 let computerMoveTxt = "";
 let roundResultTxt = "";
 let scoreTxt = "";
 let finalResultTxt = "";
+let textTxt = "";
 
+let text = document.querySelector("#text .text"); //To eventually display all of the text as one variable
 let computerMove = document.querySelector("#text .computer-move");
 let roundResult = document.querySelector("#text .round-result");
 let score = document.querySelector("#text .score");
@@ -169,10 +182,11 @@ let finalResult = document.querySelector("#text .final-result");
 const buttons = document.querySelectorAll('#icons button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        computerMove.textContent = ""; //Reset the text to contain nothing when a new round is played
-        roundResult.textContent = "";
-        score.textContent = "";
-        finalResult.textContent = "";
+        text.textContent = "";
+        //computerMove.textContent = ""; //Reset the text to contain nothing when a new round is played
+        //roundResult.textContent = "";
+        //score.textContent = "";
+        //finalResult.textContent = "";
         i = 0;
         j = 0;
         k = 0;
@@ -180,7 +194,9 @@ buttons.forEach((button) => {
 
         let continuePlaying = game(playGame(button.className, getComputerChoice()));
         //Display results
+        textTxt = `${computerMoveTxt}\r\n${roundResultTxt}\r\n${scoreTxt}\r\n${finalResultTxt}`;
         typeResults();
+        
         if(continuePlaying===false){
             endGameWindow();
         }
